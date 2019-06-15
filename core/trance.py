@@ -33,6 +33,13 @@ async def on_ready():
 	activity = discord.Game("Music")
 	await bot.change_presence(activity = activity)
 
+	# LOAD COGS
+	cogsList = ['cogs.owner.owner']
+	
+	for cog in cogsList:
+		print ("Loading:\t" + cog + "...")
+		bot.load_extension(cog)
+
 	print (str(bot.user), "is Ready")
 
 @bot.event
