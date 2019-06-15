@@ -1,2 +1,5 @@
 # TOKEN
 TOKEN
+
+# pycache's
+__pycache__/
