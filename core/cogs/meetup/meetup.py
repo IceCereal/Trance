@@ -27,7 +27,12 @@ class meetupCog(commands.Cog):
 		hidden = True
 	)
 	@commands.has_role("Admin")
-	async def start_meetup(self, ctx, theme : str):
+	async def start_meetup(self, ctx, theme : str = None):
+
+		if theme == None:
+			theme = "Unknown"
+
+
 		print ("Begin: Start-Meetup")
 
 		title = "Meet-Up | Theme:\t" + theme
@@ -49,7 +54,7 @@ class meetupCog(commands.Cog):
 			await embedMessage.edit(embed=insEmbed)
 			await sleep(5)
 
-		insEmbed = discord.Embed(title = title, description = description)
+		insEmbed = discord.Embed(title = title, description = description, delete_after = 10)
 		await embedMessage.edit(embed=insEmbed)
 
 		insMsg = await ctx.channel.fetch_message(embedMessage.id)
@@ -61,6 +66,19 @@ class meetupCog(commands.Cog):
 			if str(reaction) == '🎵':
 				musicNoteReaction = reaction
 				break
+
+		userPool = []
+		async for user in musicNoteReaction.users():
+			if user == self.bot.user:
+				continue
+			userPool.append(user)
+
+		contendersEmbed = discord.Embed(title = "Meet-Up | Theme:\t"+theme+" | Contenders")
+
+		for i in range(len(userPool)):
+			contendersEmbed.add_field(name = str(i+1), value = str(userPool[i]))
+
+		await ctx.channel.send(embed=contendersEmbed)
 
 		return
 
