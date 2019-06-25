@@ -17,6 +17,14 @@ from datetime import datetime
 from pathlib import Path
 import os
 
+import logging
+
+logger = logging.getLogger('discord')
+logger.setLevel(logging.DEBUG)
+handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
+handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
+logger.addHandler(handler)
+
 # List of Directories
 dir_core = Path("core/")
 dir_res = Path("res/")
@@ -34,7 +42,7 @@ async def on_ready():
 	await bot.change_presence(activity = activity)
 
 	# LOAD COGS
-	cogsList = ['cogs.owner.owner']
+	cogsList = ['cogs.owner.owner', 'cogs.meetup.meetup']
 	
 	for cog in cogsList:
 		print ("Loading:\t" + cog + "...")
