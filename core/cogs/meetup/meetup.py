@@ -35,7 +35,7 @@ class meetupCog(commands.Cog):
 
 		print ("Begin: Start-Meetup")
 
-		title = "Meet-Up | Theme:\t" + theme
+		title = "Meet-Up | Theme: " + theme
 		description = "Hello everyone! Interested members who want to share their song for today's Meet-Up, please react with the 🎵 emoji."
 		timeFieldName="Time Left"
 		timeToWait = 25
@@ -54,8 +54,8 @@ class meetupCog(commands.Cog):
 			await embedMessage.edit(embed=insEmbed)
 			await sleep(5)
 
-		insEmbed = discord.Embed(title = title, description = description, delete_after = 10)
-		await embedMessage.edit(embed=insEmbed)
+		insEmbed = discord.Embed(title = title, description = description)
+		await embedMessage.edit(embed=insEmbed, delete_after = 10)
 
 		insMsg = await ctx.channel.fetch_message(embedMessage.id)
 		reactions = insMsg.reactions
@@ -73,12 +73,26 @@ class meetupCog(commands.Cog):
 				continue
 			userPool.append(user)
 
-		contendersEmbed = discord.Embed(title = "Meet-Up | Theme:\t"+theme+" | Contenders")
+		contendersEmbed = discord.Embed(title = "Meet-Up | Theme: "+theme+" | Contenders")
 
 		for i in range(len(userPool)):
 			contendersEmbed.add_field(name = str(i+1), value = str(userPool[i]))
 
 		await ctx.channel.send(embed=contendersEmbed)
+
+		guild = ctx.guild
+
+		# Create the send link embed
+		dm_start_Embed = discord.Embed(title = "Meet-Up | Theme: "+theme+" | Instructions")
+		dm_start_Embed.add_field(name="1.", value="Please send a YouTube link of the song you would like to send that conforms to the theme of today's Meet-Up.")
+		dm_start_Embed.add_field(name="2.", value="You have 2 minutes from the time of this message being sent to send the link.")
+		# dm_start_Embed.add_field(name="3.", value="If another contender has sent the same link, you will be given an extra minute to send another link.")
+
+		# TODO: Finish This
+		# dmMessages_Start = []
+		# for user in userPool:
+
+
 
 		return
 
