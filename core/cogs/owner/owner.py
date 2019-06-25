@@ -1,6 +1,5 @@
 """
 	A Cog for Owner
-	Author: 
 """
 
 import discord
